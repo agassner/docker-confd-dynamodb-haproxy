@@ -1,0 +1,3 @@
+interval = 20
+backend = "dynamodb"
+table = "services"
