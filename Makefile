@@ -34,11 +34,10 @@ run-registrator:
 
 run-app:
 	# An example of simple app https://github.com/agassner/docker-node
-	docker run -d -e SERVICE_NAME=simple-app --name app1 -p 8081:8080 simple-app
-	docker run -d -e SERVICE_NAME=simple-app --name app2 -p 8082:8080 simple-app
-
-run-app3:
-	docker run -d -e SERVICE_NAME=simple-app --name app3 -p 8083:8080 simple-app
+	docker run -d -l SERVICE_NAME=simple-app1 -l SERVICE_ID=instance1:app1 --name app1a -p 8081:8080 simple-app
+	docker run -d -l SERVICE_NAME=simple-app1 -l SERVICE_ID=instance2:app1 --name app1b -p 8082:8080 simple-app
+	docker run -d -l SERVICE_NAME=simple-app2 -l SERVICE_ID=instance1:app2 --name app2a -p 8083:8080 simple-app
+	docker run -d -l SERVICE_NAME=simple-app2 -l SERVICE_ID=instance2:app2 --name app2b -p 8084:8080 simple-app
 
 run-dependencies: run-registrator run-app
 
@@ -46,4 +45,4 @@ clean-up: rm clean-up-app
 	-docker rm -f registrator-dynamodb
 
 clean-up-app:
-	-docker rm -f app1 app2 app3
+	-docker rm -f app1a app1b app2a app2b
